@@ -2,7 +2,7 @@
   "name": "exbox-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://seth44.github.io/exbox-app",
+  "homepage": "https://seth44.github.io/Exbox-App",
   "scripts": {
     "start": "react-scripts start",
     "now-start": "serve -s ./build",
