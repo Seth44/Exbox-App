@@ -12,7 +12,7 @@ function Initial(props) {
   const { classes } = props;
   return (
     <section className={classes.initial}>
-      <Typography variant="headline">Welcome to Exbox!</Typography>
+      <Typography variant="headline">Welcome!</Typography>
       
       <Typography variant="subheading">Search for a gamertag to get started.</Typography>
     </section>
