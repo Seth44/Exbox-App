@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Switch, Route, Redirect, withRouter } from "react-router-dom";
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -14,9 +14,9 @@ import Hidden from '@material-ui/core/Hidden';
 import Divider from '@material-ui/core/Divider';
 import MenuIcon from '@material-ui/icons/Menu';
 
-import routes from "../../routes/routes.js";
+import routes from "../../routes/routes";
 
-import { searchGamertag } from '../../state/currentUser';
+import { searchGamertag } from '../../state/currentUser/actions';
 
 //views
 import Initial from '../../views/Initial/Initial';
@@ -39,7 +39,6 @@ const styles = theme => ({
     width: '100%',
   },
   appBar: {
-    position: 'absolute',
     marginLeft: drawerWidth,
     [theme.breakpoints.up('md')]: {
       width: `calc(100% - ${drawerWidth}px)`,
@@ -60,13 +59,16 @@ const styles = theme => ({
   drawerPaper: {
     width: drawerWidth,
     [theme.breakpoints.up('md')]: {
-      position: 'relative',
+      position: 'fixed',
     },
   },
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
+    [theme.breakpoints.up('md')]: {
+      marginLeft: `${drawerWidth}px`,
+    },
   },
 });
 
@@ -83,11 +85,9 @@ const switchRoutes = (
 class ResponsiveDrawer extends React.Component {
   state = {
     mobileOpen: false,
-    gamertag: '',
   };
 
   onGamertagSearch = (gamertag) => {
-    this.setState({gamertag});
     this.props.searchGamertag(gamertag);
   }
 
@@ -96,10 +96,9 @@ class ResponsiveDrawer extends React.Component {
   };
 
   renderMain() {
-    const { gamertag } = this.state;
-    const { xuid, isSearching, searchError } = this.props.currentUser;
+    const { xuid, isSearching, searchError, gamertag } = this.props.currentUser;
     if (isSearching) {
-      return (<Spinner />);
+      return (<Spinner gamertag={gamertag} />);
     } else if (searchError) {
       return (<Error message={`Could not find Gamertag: ${gamertag}`}/>);
     } else if (!xuid) {
@@ -115,7 +114,7 @@ class ResponsiveDrawer extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-    const { xuid, isSearching, searchError } = this.props.currentUser;
+    const { xuid, isSearching, searchError, gamertag } = this.props.currentUser;
     const hasResults = (xuid && !isSearching && !searchError);
     const mainContent = this.renderMain();
     const noResultsStyle = (hasResults) ? {} : { width: '100%'};
@@ -130,7 +129,7 @@ class ResponsiveDrawer extends React.Component {
               textAlign: 'center'
             }}
           >
-            {this.state.gamertag}
+            {gamertag}
           </Typography>
         </div>
         <Divider />
@@ -153,7 +152,10 @@ class ResponsiveDrawer extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Search onSearch={this.onGamertagSearch} />
+            <Search 
+              onSearch={this.onGamertagSearch}
+              disabled={isSearching}
+            />
           </Toolbar>
         </AppBar>
         {hasResults && <Hidden mdUp>

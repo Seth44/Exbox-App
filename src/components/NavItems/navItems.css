@@ -1,0 +1,12 @@
+.nav-item {
+
+  text-decoration: none;
+}
+.nav-item.active span {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.nav-item.active svg {
+  color: #4caf50;
+}

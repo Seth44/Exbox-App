@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import InfiniteLoaderScreenshots from '../../components/InfiniteLoader/InfiniteLoaderScreenshots';
 
 const styles = theme => ({
   screenshots: {
-    textAlign: 'center'
+    textAlign: 'left'
   },
 });
 
@@ -15,10 +16,7 @@ function Screenshots(props) {
   return (
     <section className={classes.screenshots}>
       <Typography variant="headline" >Screenshots: </Typography>
-      <img controls
-        src={screenshots[0].screenshotUris[0].uri}
-        width="500">
-      </img>
+      <InfiniteLoaderScreenshots items={screenshots} />
     </section>
   );
 }

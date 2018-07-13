@@ -9,7 +9,7 @@ const styles = theme => ({
 });
 
 function Search(props) {
-  const { classes, onSearch } = props;
+  const { classes, onSearch, disabled } = props;
   return (
     <section className={classes.searchBar}>
       <SearchBar
@@ -18,7 +18,8 @@ function Search(props) {
         style={{
           margin: '0 auto',
           maxWidth: 800
-        }} 
+        }}
+        disabled={disabled}
       />
     </section>
   );
