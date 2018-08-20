@@ -1,5 +1,5 @@
 const myHeaders = new Headers({
-  "X-AUTH": "d713766e0ae7edfb766d906180f069be288e43ed",
+  "X-AUTH": "fb4167c0e40029cb754f1701808a9fd4fcfcd918",
 });
 
 const authenticate = () => {
