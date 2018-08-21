@@ -4,30 +4,35 @@ import MovieIcon from '@material-ui/icons/Movie';
 import PersonIcon from '@material-ui/icons/Person';
 
 // core components/views
+import InitialPage from "../views/Initial/Initial";
 import DashboardPage from "../views/Dashboard/Dashboard";
 import ClipsPage from "../views/Clips/Clips";
 import ScreenshotsPage from "../views/Screenshots/Screenshots";
 
 const routes = [
   {
-    path: "/dashboard",
+    path: "/",
+    component: InitialPage,
+  },
+  {
+    path: "/:gamertag/dashboard",
     sidebarName: "Dashboard",
     component: DashboardPage,
     icon: <PersonIcon />,
   },
   {
-    path: "/clips",
+    path: "/:gamertag/clips",
     sidebarName: "Clips",
     component: ClipsPage,
     icon: <MovieIcon />
   },
   {
-    path: "/screenshots",
+    path: "/:gamertag/screenshots",
     sidebarName: "Screenshots",
     component: ScreenshotsPage,
     icon: <PhotoLibraryIcon />
   },
-  { redirect: true, to: "/dashboard", navbarName: "Redirect" }
+  { redirect: true, to: "/", navbarName: "Redirect" }
 ];
 
 export default routes;

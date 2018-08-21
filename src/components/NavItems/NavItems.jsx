@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -19,14 +20,16 @@ const styles = theme => ({
 });
 
 function NavItems(props) {
-  const { classes } = props;
+  const { classes, currentUser } = props;
+  const { profile } = currentUser;
   return (
     <List className={classes.navItems}>
       {routes.map((route, key) => {
-        if (route.redirect) return null;
+        if (route.redirect || !route.sidebarName) return null;
+        const path = route.path.replace(/:gamertag/i, profile.Gamertag);
         return (
           <NavLink 
-            to={route.path}
+            to={path}
             activeClassName="active"
             key={key}
             className="nav-item"
@@ -44,5 +47,9 @@ function NavItems(props) {
   );
 }
 
+const mapStateToProps = state => ({
+  currentUser: state.currentUser,
+})
 
-export default withStyles(styles)(NavItems);
+
+export default connect(mapStateToProps)(withStyles(styles)(NavItems));

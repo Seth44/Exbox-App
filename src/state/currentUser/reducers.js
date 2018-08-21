@@ -5,6 +5,7 @@ const initialState = {
   searchError: null,
   xuid: null,
   gamertag: null,
+  profile: null,
   clips: null,
   screenshots: null,
 }
@@ -28,6 +29,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         gamertag: action.payload,
+      }
+
+    case types.SET_PROFILE:
+      return {
+        ...state,
+        profile: action.payload,
       }
 
     case types.SET_CLIPS:

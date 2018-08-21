@@ -1,5 +1,6 @@
 import { 
   fetchXuid,
+  fetchProfile,
   fetchClips,
   fetchScreenshots
 } from '../../services/services';
@@ -39,6 +40,13 @@ const setGamertag = (gamertag) => {
   };
 }
 
+const setProfile = (profile) => {
+  return {
+    type: types.SET_PROFILE,
+    payload: profile,
+  };
+}
+
 const setClips = (clips) => {
   return {
     type: types.SET_CLIPS,
@@ -53,7 +61,7 @@ const setScreenshots = (screenshots) => {
   };
 }
 
-export const searchGamertag = (gamertag) => {
+export const searchGamertag = (gamertag, redirect) => {
   return function (dispatch) {
     dispatch(searchStarted());
     dispatch(setGamertag(gamertag));
@@ -61,12 +69,14 @@ export const searchGamertag = (gamertag) => {
       getXuid(gamertag)
     ).then((xuid) => 
       Promise.all([
+        dispatch(getProfile(xuid)),
         dispatch(getClips(xuid)),
         dispatch(getScreenshots(xuid)),
       ])
     ).then(() => {
       dispatch(searchFinished())
-      history.push('/dashboard');
+      const currentUrl = (redirect) ? `/${gamertag}/${redirect}` : `/${gamertag}/dashboard`
+      history.push(currentUrl);
     });    
   }
 }
@@ -83,6 +93,17 @@ const getXuid = (gamertag) => {
   }
 }
 
+const getProfile = (xuid) => {
+  return function (dispatch) {
+    return fetchProfile(xuid).then((profile) => {
+      dispatch(setProfile(profile));
+      return profile;
+    },
+    (error) => {
+      dispatch(searchError())
+    })
+  }
+}
 const getClips = (xuid) => {
   return function (dispatch) {
     return fetchClips(xuid).then((clips) => {

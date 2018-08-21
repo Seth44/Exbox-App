@@ -1,5 +1,6 @@
 export const SET_XUID = 'currentUser/SET_XUID';
 export const SET_GAMERTAG = 'currentUser/SET_GAMERTAG';
+export const SET_PROFILE = 'currentUser/SET_PROFILE';
 export const SET_CLIPS = 'currentUser/SET_CLIPS';
 export const SET_SCREENSHOTS = 'currentUser/SET_SCREENSHOTS';
 

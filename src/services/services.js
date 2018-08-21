@@ -28,6 +28,20 @@ function fetchXuid(gamertag) {
   });
 }
 
+function fetchProfile(xuid) {
+  return fetch('https://xboxapi.com/v2/' + xuid + '/profile', {
+    headers: myHeaders
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    console.log(myJson);
+    if (myJson.error_code) throw Error(myJson.error_message);
+    return myJson;
+  });
+}
+
 function fetchClips(xuid) {
   return fetch('https://xboxapi.com/v2/' + xuid + '/game-clips', {
     headers: myHeaders
@@ -57,4 +71,10 @@ function fetchScreenshots(xuid) {
 }
 
 
-export { authenticate, fetchXuid, fetchClips, fetchScreenshots };
+export { 
+  authenticate,
+  fetchXuid,
+  fetchProfile,
+  fetchClips,
+  fetchScreenshots 
+};

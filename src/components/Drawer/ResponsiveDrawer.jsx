@@ -18,9 +18,6 @@ import routes from "../../routes/routes";
 
 import { searchGamertag } from '../../state/currentUser/actions';
 
-//views
-import Initial from '../../views/Initial/Initial';
-
 //components
 import Spinner from '../Spinner/Spinner';
 import Error from '../Error/Error';
@@ -96,13 +93,11 @@ class ResponsiveDrawer extends React.Component {
   };
 
   renderMain() {
-    const { xuid, isSearching, searchError, gamertag } = this.props.currentUser;
+    const { isSearching, searchError, gamertag } = this.props.currentUser;
     if (isSearching) {
       return (<Spinner gamertag={gamertag} />);
     } else if (searchError) {
       return (<Error message={`Could not find Gamertag: ${gamertag}`}/>);
-    } else if (!xuid) {
-      return <Initial />
     } else {
       return (
         <div>
@@ -113,8 +108,9 @@ class ResponsiveDrawer extends React.Component {
 }
 
   render() {
-    const { classes, theme } = this.props;
-    const { xuid, isSearching, searchError, gamertag } = this.props.currentUser;
+    const { classes, theme, currentUser } = this.props;
+    const { xuid, isSearching, searchError, profile } = currentUser;
+    const gamertag = (profile) ? profile.Gamertag : currentUser.gamertag;
     const hasResults = (xuid && !isSearching && !searchError);
     const mainContent = this.renderMain();
     const noResultsStyle = (hasResults) ? {} : { width: '100%'};
@@ -144,6 +140,7 @@ class ResponsiveDrawer extends React.Component {
       <div className={classes.root}>
         <AppBar className={classes.appBar} style={noResultsStyle}>
           <Toolbar className={classes.navToolbar}>
+          {hasResults && 
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -152,6 +149,7 @@ class ResponsiveDrawer extends React.Component {
             >
               <MenuIcon />
             </IconButton>
+          }
             <Search 
               onSearch={this.onGamertagSearch}
               disabled={isSearching}
