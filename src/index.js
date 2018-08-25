@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import store, { history } from './store'
 
 import 'sanitize.css/sanitize.css'
@@ -18,6 +18,7 @@ render(
         {indexRoutes.map((prop, key) => {
           return <Route path={prop.path} component={prop.component} key={key} />;
         })}
+        <Redirect to='/'/>
       </Switch>
     </ConnectedRouter>
   </Provider>,
