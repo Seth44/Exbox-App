@@ -34,6 +34,7 @@ class Clip extends React.Component {
   render() {
     const { classes, clip, gif } = this.props;
     const { status } = gif;
+    const recordedDate = new Date(clip.dateRecorded).toDateString();
     return (
       <div className={classes.clip}> 
         <Card className={classes.card}>
@@ -47,8 +48,8 @@ class Clip extends React.Component {
             <Typography gutterBottom variant="headline" component="h2">
               {clip.titleName}
             </Typography>
-            <Typography component="p">
-              
+            <Typography variant="subheading" component="p">
+              {recordedDate}
             </Typography>
           </CardContent>
           <CardActions>
