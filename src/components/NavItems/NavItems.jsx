@@ -22,11 +22,12 @@ const styles = theme => ({
 function NavItems(props) {
   const { classes, currentUser } = props;
   const { profile } = currentUser;
+  const gamertag = (!profile) ? currentUser.gamertag : profile.Gamertag
   return (
     <List className={classes.navItems}>
       {routes.map((route, key) => {
         if (route.redirect || !route.sidebarName) return null;
-        const path = route.path.replace(/:gamertag/i, profile.Gamertag);
+        const path = route.path.replace(/:gamertag/i, gamertag);
         return (
           <NavLink 
             to={path}

@@ -62,17 +62,19 @@ const setScreenshots = (screenshots) => {
 }
 
 export const searchGamertag = (gamertag, redirect) => {
-  return function (dispatch) {
+  return function (dispatch, getState) {
     dispatch(searchStarted());
     dispatch(setGamertag(gamertag));
     return dispatch(
       getXuid(gamertag)
-    ).then((xuid) => 
-      Promise.all([
+    ).then((xuid) => {
+      if (!xuid) xuid = getState().currentUser.xuid;
+      return Promise.all([
         dispatch(getProfile(xuid)),
         dispatch(getClips(xuid)),
         dispatch(getScreenshots(xuid)),
       ])
+    }
     ).then(() => {
       dispatch(searchFinished())
       const currentUrl = (redirect) ? `/${gamertag}/${redirect}` : `/${gamertag}/dashboard`
@@ -83,8 +85,16 @@ export const searchGamertag = (gamertag, redirect) => {
 
 const getXuid = (gamertag) => {
   return (dispatch) => {
+    const localXuid = localStorage.getItem(gamertag.toLowerCase());
+    if (localXuid) {
+      return new Promise(resolve => {
+        dispatch(setXuid(localXuid));
+        setTimeout(resolve, 10)
+      });
+    }
     return fetchXuid(gamertag).then((xuid) => {
       dispatch(setXuid(xuid));
+      localStorage.setItem(gamertag, xuid);
       return xuid;
     },
     (error) => {
