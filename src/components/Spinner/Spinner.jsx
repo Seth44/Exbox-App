@@ -23,9 +23,14 @@ function Spinner(props) {
   const { classes, gamertag } = props;
   return (
     <div className={classes.spinner}>
-    <Typography variant="subheading" className={classes.description}>
-      Fetching {gamertag}'s data...
-    </Typography>
+      <Typography variant="subheading" className={classes.description}>
+        Fetching {gamertag}'s data...
+      </Typography>
+      <br />
+      <Typography variant="subheading" className={classes.description}>
+        This may take a few minutes...
+      </Typography>
+      <br />
       <CircularProgress className={classes.progress} size={50} />
     </div>
   );

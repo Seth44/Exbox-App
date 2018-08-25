@@ -16,6 +16,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import routes from "../../routes/routes";
 
+import { authenticate } from "../../services/gifService";
+
 import { searchGamertag } from '../../state/currentUser/actions';
 
 //components
@@ -86,6 +88,7 @@ class ResponsiveDrawer extends React.Component {
 
   onGamertagSearch = (gamertag) => {
     this.props.searchGamertag(gamertag);
+    authenticate();
   }
 
   handleDrawerToggle = () => {

@@ -1,5 +1,6 @@
 const myHeaders = new Headers({
   "X-AUTH": "fb4167c0e40029cb754f1701808a9fd4fcfcd918",
+  "Access-Control-Allow-Origin": "no-cors"
 });
 
 const authenticate = () => {
@@ -65,7 +66,7 @@ function fetchScreenshots(xuid) {
   })
   .then(function(myJson) {
     console.log(myJson);
-    if (myJson.error_code) throw Error(myJson.error_message);
+    // if (myJson.error_code) throw Error(myJson.error_message);
     return myJson;
   });
 }

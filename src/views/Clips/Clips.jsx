@@ -5,6 +5,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import InfiniteLoaderClips from '../../components/InfiniteLoader/InfiniteLoaderClips';
 
+import { authenticate } from "../../services/gifService";
+
 import { searchGamertag } from '../../state/currentUser/actions';
 
 const styles = theme => ({
@@ -16,6 +18,7 @@ const styles = theme => ({
 class Clips extends React.Component {
 
   componentWillMount() {
+    authenticate();
     const gamertag = this.props.match.params.gamertag;
     if (!this.props.currentUser.xuid && gamertag) {
       this.props.searchGamertag(gamertag, 'clips');
