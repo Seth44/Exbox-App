@@ -71,7 +71,7 @@ class GifModal extends React.Component {
               InputProps={{
                 readOnly: true,
               }}
-              style={{flexGrow: 1}}
+              style={{flexGrow: 1, paddingRight: '20px'}}
             />
             <div>
               <Tooltip title="Copy Url">

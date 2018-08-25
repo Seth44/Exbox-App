@@ -117,6 +117,7 @@ class ResponsiveDrawer extends React.Component {
     const hasResults = (xuid && !isSearching && !searchError);
     const mainContent = this.renderMain();
     const noResultsStyle = (hasResults) ? {} : { width: '100%'};
+    const noResultsContentStyle = (hasResults) ? {} : { marginLeft: 0};
 
     const drawer = (
       <div>
@@ -141,7 +142,7 @@ class ResponsiveDrawer extends React.Component {
 
     return (
       <div className={classes.root}>
-        <AppBar className={classes.appBar} style={noResultsStyle}>
+        <AppBar className={(hasResults) ? classes.appBar : ''} style={noResultsStyle}>
           <Toolbar className={classes.navToolbar}>
           {hasResults && 
             <IconButton
@@ -186,7 +187,7 @@ class ResponsiveDrawer extends React.Component {
             {drawer}
           </Drawer>
         </Hidden>}
-        <main className={classes.content}>
+        <main className={classes.content} style={noResultsContentStyle}>
           <div className={classes.toolbar} />
           {mainContent}
         </main>
